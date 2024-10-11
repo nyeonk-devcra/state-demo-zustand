@@ -3,6 +3,7 @@ import type { Metadata } from "next";
 import "./globals.css";
 
 import { pretendardStd } from "@/components/fonts";
+import clsx from "clsx";
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -16,7 +17,9 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="ko">
-      <body className={pretendardStd.className}>{children}</body>
+      <body className={clsx("font-pretendardStd", pretendardStd.variable)}>
+        {children}
+      </body>
     </html>
   );
 }
