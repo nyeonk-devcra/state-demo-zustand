@@ -17,7 +17,7 @@ import {
 } from "@heroicons/react/20/solid";
 import Link from "next/link";
 import DevCra from "@/components/DevCra";
-import { signIn } from "next-auth/react";
+import { signIn, signOut } from "next-auth/react";
 import Image from "next/image";
 
 export default function NavigationBar({ session }: { session: unknown }) {
@@ -45,6 +45,12 @@ export default function NavigationBar({ session }: { session: unknown }) {
                   className="rounded-md px-3 py-2 text-sm font-medium text-gray-300 hover:bg-gray-700 hover:text-white"
                 >
                   CSR
+                </Link>
+                <Link
+                  href="/protected"
+                  className="rounded-md px-3 py-2 text-sm font-medium text-gray-300 hover:bg-gray-700 hover:text-white"
+                >
+                  Protected
                 </Link>
               </div>
             </div>
@@ -98,6 +104,8 @@ export default function NavigationBar({ session }: { session: unknown }) {
                         alt=""
                         src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
                         className="h-8 w-8 rounded-full"
+                        width={32}
+                        height={32}
                       />
                     </MenuButton>
                   </div>
@@ -125,6 +133,9 @@ export default function NavigationBar({ session }: { session: unknown }) {
                       <a
                         href="#"
                         className="block px-4 py-2 text-sm text-gray-700 data-[focus]:bg-gray-100"
+                        onClick={() => {
+                          signOut();
+                        }}
                       >
                         Sign out
                       </a>
@@ -165,6 +176,13 @@ export default function NavigationBar({ session }: { session: unknown }) {
             className="block rounded-md px-3 py-2 text-base font-medium text-gray-300 hover:bg-gray-700 hover:text-white"
           >
             CSR
+          </DisclosureButton>
+          <DisclosureButton
+            as="a"
+            href="protected"
+            className="block rounded-md px-3 py-2 text-base font-medium text-gray-300 hover:bg-gray-700 hover:text-white"
+          >
+            Protected
           </DisclosureButton>
         </div>
         <div className="border-t border-gray-700 pb-3 pt-4">

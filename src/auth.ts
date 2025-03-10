@@ -1,9 +1,6 @@
 import Credentials from "next-auth/providers/credentials";
 import NextAuth, { CredentialsSignin, User } from "next-auth";
-import { PrismaAdapter } from "@auth/prisma-adapter";
-import { PrismaClient } from "@prisma/client";
-import { getUser } from "@/models/user";
-import { saltAndHashPassword } from "@/utils/auth";
+
 import { defaultAuth } from "@/lib/auth";
 
 declare module "next-auth" {
@@ -13,12 +10,9 @@ declare module "next-auth" {
   }
 }
 
-const prisma = new PrismaClient();
-
 export const { handlers, auth, signIn, signOut } = NextAuth({
   debug: true,
   ...defaultAuth,
-  adapter: PrismaAdapter(prisma),
   pages: {
     signIn: "/signin",
   },
@@ -40,13 +34,16 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
         const password = credentials.password as string;
 
         try {
-          const user = await getUser({
-            where: {
-              email,
-            },
+          const response = await fetch("http://localhost:3000/api/signin", {
+            method: "POST",
+            body: JSON.stringify({ email, password }),
           });
 
-          if (user && (await saltAndHashPassword(password, user.password))) {
+          const { user } = await response.json();
+
+          console.log("[auth.ts] user", user);
+
+          if (user) {
             return {
               id: user.id.toString(),
               name: user.name,
