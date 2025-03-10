@@ -8,6 +8,9 @@ const config: Config = {
   ],
   theme: {
     extend: {
+      colors: {
+        "devcra-primary": "#E9A374",
+      },
       fontFamily: {
         pretendardStd: [
           "var(--pretendard-std)",
