@@ -1,6 +1,5 @@
 import Credentials from "next-auth/providers/credentials";
 import NextAuth, { CredentialsSignin, User } from "next-auth";
-
 import { defaultAuth } from "@/lib/auth";
 
 declare module "next-auth" {
@@ -9,6 +8,8 @@ declare module "next-auth" {
     name: string | null;
   }
 }
+
+const BASE_HOST = process.env.BASE_HOST ?? "http://localhost:3000";
 
 export const { handlers, auth, signIn, signOut } = NextAuth({
   debug: true,
@@ -34,8 +35,11 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
         const password = credentials.password as string;
 
         try {
-          const response = await fetch("http://localhost:3000/api/signin", {
+          const response = await fetch(`${BASE_HOST}/api/signin`, {
             method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
             body: JSON.stringify({ email, password }),
           });
 
