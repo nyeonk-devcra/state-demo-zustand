@@ -2,8 +2,9 @@
 
 프론트 개발용 템플릿
 
-- Next.js v14.2.5
-- Tailwind CSS v3.4.1
+- Next.js v15.2.1
+- React v19.0.0
+- Tailwind CSS v4.0
 
 ## Getting Started
 
